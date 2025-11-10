@@ -2,8 +2,8 @@
 
 from .base import BaseIntegration
 from .claude_integration import ClaudeIntegration
-from .github_integration import GitHubIntegration
 from .copilot_integration import CopilotIntegration
+from .github_integration import GitHubIntegration
 from .huggingface_integration import HuggingFaceIntegration
 
 __all__ = [

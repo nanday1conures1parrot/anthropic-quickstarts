@@ -9,6 +9,7 @@ through multiple AI integrations simultaneously and producing blended responses.
 import asyncio
 import os
 import sys
+
 from orb_integration.core import Orb
 
 
@@ -18,13 +19,13 @@ async def demo_basic_query():
     print("ORB INTEGRATION SYSTEM - BASIC QUERY DEMO")
     print("=" * 70)
     print()
-    
+
     # Initialize the Orb
     orb = Orb(
         anthropic_api_key=os.environ.get("ANTHROPIC_API_KEY"),
         blend_strategy="weighted"
     )
-    
+
     # Show system status
     status = orb.get_status()
     print("🌐 Orb System Status:")
@@ -33,22 +34,22 @@ async def demo_basic_query():
         status_icon = "✓" if integration['enabled'] else "✗"
         print(f"   {status_icon} {integration['name']}")
     print()
-    
+
     # Process a query
     query = "How can I write a Python function to optimize database queries?"
     print(f"📝 User Query: {query}")
     print()
     print("⚡ Processing through all integrations...")
     print()
-    
+
     response = await orb.process_query(query)
-    
+
     # Display results
     print("─" * 70)
     print("✨ UNIFIED ORB RESPONSE")
     print("─" * 70)
     print()
-    
+
     if response.get("status") == "success":
         print(response.get("unified_content", ""))
         print()
@@ -57,13 +58,13 @@ async def demo_basic_query():
         print(f"✓ Blend Strategy: {response.get('blend_strategy', 'unknown')}")
         print(f"✓ Successful: {response.get('successful_integrations', 0)}")
         print(f"✓ Failed: {response.get('failed_integrations', 0)}")
-        
+
         metadata = response.get("orb_metadata", {})
         print(f"✓ Execution ID: {metadata.get('execution_id', 'N/A')}")
         print(f"✓ Unity Preserved: {metadata.get('unity_preserved', False)}")
     else:
         print(f"❌ Error: {response.get('message', 'Unknown error')}")
-    
+
     print()
 
 
@@ -74,32 +75,32 @@ async def demo_multiple_queries():
     print("ORB INTEGRATION SYSTEM - MULTIPLE QUERIES DEMO")
     print("=" * 70)
     print()
-    
+
     # Initialize the Orb
     orb = Orb(
         anthropic_api_key=os.environ.get("ANTHROPIC_API_KEY"),
         blend_strategy="weighted"
     )
-    
+
     queries = [
         "How do I debug a memory leak in my application?",
         "What are best practices for API design?",
         "Help me refactor this code for better performance"
     ]
-    
+
     for i, query in enumerate(queries, 1):
         print(f"📝 Query {i}: {query}")
         response = await orb.process_query(query)
-        
+
         if response.get("status") == "success":
-            print(f"✓ Processed successfully")
+            print("✓ Processed successfully")
             print(f"  Sources: {', '.join(response.get('sources', []))}")
             metadata = response.get("orb_metadata", {})
             print(f"  Execution ID: {metadata.get('execution_id', 'N/A')}")
         else:
             print(f"❌ Error: {response.get('message', 'Unknown error')}")
         print()
-    
+
     # Show final system status
     status = orb.get_status()
     print("─" * 70)
@@ -116,25 +117,25 @@ async def demo_blend_strategies():
     print("ORB INTEGRATION SYSTEM - BLEND STRATEGIES DEMO")
     print("=" * 70)
     print()
-    
+
     query = "Create a function to validate user input"
     strategies = ["weighted", "concatenate", "prioritize"]
-    
+
     for strategy in strategies:
         print(f"🔄 Testing '{strategy}' blend strategy...")
         print()
-        
+
         orb = Orb(
             anthropic_api_key=os.environ.get("ANTHROPIC_API_KEY"),
             blend_strategy=strategy
         )
-        
+
         response = await orb.process_query(query)
-        
+
         if response.get("status") == "success":
             print(f"✓ Strategy: {response.get('blend_strategy', 'unknown')}")
             print(f"  Sources: {', '.join(response.get('sources', []))}")
-            
+
             # Show abbreviated content
             content = response.get("unified_content", "")
             if len(content) > 200:
@@ -143,7 +144,7 @@ async def demo_blend_strategies():
                 print(f"  Content preview: {content}")
         else:
             print(f"❌ Error: {response.get('message', 'Unknown error')}")
-        
+
         print()
         print("─" * 70)
         print()
@@ -159,23 +160,23 @@ async def interactive_mode():
     print("Enter your queries to process through the unified Orb system.")
     print("Type 'quit' or 'exit' to stop, 'status' to see system status.")
     print()
-    
+
     orb = Orb(
         anthropic_api_key=os.environ.get("ANTHROPIC_API_KEY"),
         blend_strategy="weighted"
     )
-    
+
     while True:
         try:
             query = input("📝 Your query: ").strip()
-            
+
             if not query:
                 continue
-            
+
             if query.lower() in ["quit", "exit"]:
                 print("👋 Shutting down Orb system...")
                 break
-            
+
             if query.lower() == "status":
                 status = orb.get_status()
                 print()
@@ -188,12 +189,12 @@ async def interactive_mode():
                     print(f"   {status_icon} {integration['name']}")
                 print()
                 continue
-            
+
             print()
             print("⚡ Processing...")
             response = await orb.process_query(query)
             print()
-            
+
             if response.get("status") == "success":
                 print("✨ Unified Response:")
                 print(response.get("unified_content", ""))
@@ -201,11 +202,11 @@ async def interactive_mode():
                 print(f"Sources: {', '.join(response.get('sources', []))}")
             else:
                 print(f"❌ Error: {response.get('message', 'Unknown error')}")
-            
+
             print()
             print("─" * 70)
             print()
-            
+
         except KeyboardInterrupt:
             print()
             print("👋 Shutting down Orb system...")
@@ -221,7 +222,7 @@ async def main():
         mode = sys.argv[1]
     else:
         mode = "basic"
-    
+
     if mode == "basic":
         await demo_basic_query()
     elif mode == "multiple":
