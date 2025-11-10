@@ -26,6 +26,12 @@ An environment and tools that Claude can use to control a desktop computer. This
 
 [Go to Computer Use Demo Quickstart](./computer-use-demo)
 
+### Unified Orb System
+
+A singular, cohesive entity that merges diverse technologies and concepts into an inseparable whole. The Orb integrates AI services (Claude, GPT, Hugging Face), development tools (GitHub, Copilot), quantum computing principles, neural networks, and multiple programming languages into a unified processing system. No modularity - everything operates as one.
+
+[Go to Unified Orb System](./orb-system)
+
 ## General Usage
 
 Each quickstart project comes with its own README and setup instructions. Generally, you'll follow these steps:
