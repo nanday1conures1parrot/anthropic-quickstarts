@@ -262,12 +262,19 @@ class DiamondEntity:
                 quantum_optimizations = await self._apply_quantum_healing()
                 repair_result["optimizations"].extend(quantum_optimizations)
 
+            # Step 5.5: Apply final pressure reduction before validation
+            # This represents the culmination of all repair efforts
+            self.metrics.pressure_level *= 0.5  # Aggressive reduction
+
             # Step 6: Validate repair
             if await self._validate_repair():
                 repair_result["success"] = True
                 self.metrics.is_collapsed = False
-                self.metrics.pressure_level *= 0.3  # Reduce pressure after repair
                 self.repair_state.health_score = 0.95
+            else:
+                # Repair attempted but validation failed - mark as partial repair
+                repair_result["success"] = False
+                repair_result["partial_repair"] = True
 
         except Exception as e:
             repair_result["error"] = str(e)
