@@ -26,6 +26,12 @@ An environment and tools that Claude can use to control a desktop computer. This
 
 [Go to Computer Use Demo Quickstart](./computer-use-demo)
 
+### Orb Integration System
+
+A unified AI integration framework that seamlessly blends multiple AI technologies (Claude, GitHub, Copilot, Hugging Face) into a single cohesive system. This project demonstrates how to create a unified execution flow where multiple AI systems work as one inseparable entity.
+
+[Go to Orb Integration Quickstart](./orb-integration)
+
 ## General Usage
 
 Each quickstart project comes with its own README and setup instructions. Generally, you'll follow these steps:
