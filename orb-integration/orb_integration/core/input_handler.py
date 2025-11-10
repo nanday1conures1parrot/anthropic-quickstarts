@@ -20,7 +20,7 @@ class InputHandler:
         self,
         query: str,
         context: Optional[Dict[str, Any]] = None,
-        metadata: Optional[Dict[str, Any]] = None
+        metadata: Optional[Dict[str, Any]] = None,
     ) -> Dict[str, Any]:
         """
         Condense user input into a unified format for the Orb.
@@ -44,7 +44,7 @@ class InputHandler:
             "entities": entities,
             "context": context or {},
             "metadata": metadata or {},
-            "timestamp": self._get_timestamp()
+            "timestamp": self._get_timestamp(),
         }
 
         # Add to history
@@ -88,11 +88,7 @@ class InputHandler:
         Returns:
             Dictionary of entity types and their values
         """
-        entities = {
-            "languages": [],
-            "technologies": [],
-            "concepts": []
-        }
+        entities = {"languages": [], "technologies": [], "concepts": []}
 
         # Programming languages
         languages = ["python", "javascript", "typescript", "java", "c++", "go", "rust"]
@@ -107,7 +103,7 @@ class InputHandler:
                 entities["technologies"].append(tech)
 
         # Extract potential concept words (capitalized words)
-        concepts = re.findall(r'\b[A-Z][a-z]+(?:\s+[A-Z][a-z]+)*\b', query)
+        concepts = re.findall(r"\b[A-Z][a-z]+(?:\s+[A-Z][a-z]+)*\b", query)
         entities["concepts"] = concepts
 
         return entities
@@ -115,6 +111,7 @@ class InputHandler:
     def _get_timestamp(self) -> str:
         """Get current timestamp."""
         from datetime import datetime, timezone
+
         return datetime.now(timezone.utc).isoformat()
 
     def get_history(self) -> List[Dict[str, Any]]:

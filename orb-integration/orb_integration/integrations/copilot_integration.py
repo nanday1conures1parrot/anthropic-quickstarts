@@ -67,14 +67,9 @@ class CopilotIntegration(BaseIntegration):
                 "content": "\n".join(suggestions),
                 "metadata": {
                     "suggestion_type": "code_assistance",
-                    "suggestions_count": len(suggestions)
-                }
+                    "suggestions_count": len(suggestions),
+                },
             }
 
         except Exception as e:
-            return {
-                "source": self.name,
-                "status": "error",
-                "message": str(e),
-                "content": None
-            }
+            return {"source": self.name, "status": "error", "message": str(e), "content": None}

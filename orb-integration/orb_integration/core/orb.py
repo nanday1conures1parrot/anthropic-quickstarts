@@ -24,11 +24,7 @@ class Orb:
     that draw from the collective intelligence of all components.
     """
 
-    def __init__(
-        self,
-        anthropic_api_key: Optional[str] = None,
-        blend_strategy: str = "weighted"
-    ):
+    def __init__(self, anthropic_api_key: Optional[str] = None, blend_strategy: str = "weighted"):
         """
         Initialize the Orb system.
 
@@ -46,7 +42,7 @@ class Orb:
             ClaudeIntegration(api_key=anthropic_api_key),
             GitHubIntegration(),
             CopilotIntegration(),
-            HuggingFaceIntegration()
+            HuggingFaceIntegration(),
         ]
 
         # State tracking
@@ -54,9 +50,7 @@ class Orb:
         self._unified_state: Dict[str, Any] = {}
 
     async def process_query(
-        self,
-        query: str,
-        context: Optional[Dict[str, Any]] = None
+        self, query: str, context: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
         """
         Process a user query through the entire Orb system.
@@ -77,9 +71,7 @@ class Orb:
 
         # Phase 1: Condense input through central handler
         unified_input = self.input_handler.condense_input(
-            query=query,
-            context=context,
-            metadata={"execution_id": self._execution_count}
+            query=query, context=context, metadata={"execution_id": self._execution_count}
         )
 
         # Phase 2: Spin up the Orb singularity - process through all integrations simultaneously
@@ -87,8 +79,7 @@ class Orb:
 
         # Phase 3: Blend responses into unified output
         unified_response = self.response_blender.blend_responses(
-            responses=responses,
-            strategy=self.blend_strategy
+            responses=responses, strategy=self.blend_strategy
         )
 
         # Phase 4: Update unified state (self-compression)
@@ -100,15 +91,12 @@ class Orb:
             "integrations_engaged": len(self.integrations),
             "active_integrations": len([i for i in self.integrations if i.is_enabled()]),
             "blend_strategy": self.blend_strategy,
-            "unity_preserved": True
+            "unity_preserved": True,
         }
 
         return unified_response
 
-    async def _execute_orbital_flow(
-        self,
-        unified_input: Dict[str, Any]
-    ) -> List[Dict[str, Any]]:
+    async def _execute_orbital_flow(self, unified_input: Dict[str, Any]) -> List[Dict[str, Any]]:
         """
         Execute the orbital flow - process input through all integrations simultaneously.
 
@@ -135,12 +123,14 @@ class Orb:
             processed_responses = []
             for i, response in enumerate(responses):
                 if isinstance(response, Exception):
-                    processed_responses.append({
-                        "source": self.integrations[i].name,
-                        "status": "error",
-                        "message": str(response),
-                        "content": None
-                    })
+                    processed_responses.append(
+                        {
+                            "source": self.integrations[i].name,
+                            "status": "error",
+                            "message": str(response),
+                            "content": None,
+                        }
+                    )
                 else:
                     processed_responses.append(response)
 
@@ -149,9 +139,7 @@ class Orb:
             return []
 
     def _update_unified_state(
-        self,
-        unified_input: Dict[str, Any],
-        unified_response: Dict[str, Any]
+        self, unified_input: Dict[str, Any], unified_response: Dict[str, Any]
     ) -> None:
         """
         Update the Orb's unified state (perpetual self-compression).
@@ -165,7 +153,7 @@ class Orb:
         self._unified_state[f"execution_{execution_id}"] = {
             "input": unified_input,
             "response": unified_response,
-            "timestamp": unified_input.get("timestamp")
+            "timestamp": unified_input.get("timestamp"),
         }
 
         # Maintain only recent history to prevent unbounded growth
@@ -223,16 +211,12 @@ class Orb:
         return {
             "execution_count": self._execution_count,
             "integrations": [
-                {
-                    "name": i.name,
-                    "enabled": i.is_enabled(),
-                    "type": type(i).__name__
-                }
+                {"name": i.name, "enabled": i.is_enabled(), "type": type(i).__name__}
                 for i in self.integrations
             ],
             "blend_strategy": self.blend_strategy,
             "state_size": len(self._unified_state),
-            "system_health": "operational"
+            "system_health": "operational",
         }
 
     def set_blend_strategy(self, strategy: str) -> None:

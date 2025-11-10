@@ -21,17 +21,14 @@ async def demo_basic_query():
     print()
 
     # Initialize the Orb
-    orb = Orb(
-        anthropic_api_key=os.environ.get("ANTHROPIC_API_KEY"),
-        blend_strategy="weighted"
-    )
+    orb = Orb(anthropic_api_key=os.environ.get("ANTHROPIC_API_KEY"), blend_strategy="weighted")
 
     # Show system status
     status = orb.get_status()
     print("🌐 Orb System Status:")
     print(f"   Active Integrations: {len([i for i in status['integrations'] if i['enabled']])}")
-    for integration in status['integrations']:
-        status_icon = "✓" if integration['enabled'] else "✗"
+    for integration in status["integrations"]:
+        status_icon = "✓" if integration["enabled"] else "✗"
         print(f"   {status_icon} {integration['name']}")
     print()
 
@@ -77,15 +74,12 @@ async def demo_multiple_queries():
     print()
 
     # Initialize the Orb
-    orb = Orb(
-        anthropic_api_key=os.environ.get("ANTHROPIC_API_KEY"),
-        blend_strategy="weighted"
-    )
+    orb = Orb(anthropic_api_key=os.environ.get("ANTHROPIC_API_KEY"), blend_strategy="weighted")
 
     queries = [
         "How do I debug a memory leak in my application?",
         "What are best practices for API design?",
-        "Help me refactor this code for better performance"
+        "Help me refactor this code for better performance",
     ]
 
     for i, query in enumerate(queries, 1):
@@ -125,10 +119,7 @@ async def demo_blend_strategies():
         print(f"🔄 Testing '{strategy}' blend strategy...")
         print()
 
-        orb = Orb(
-            anthropic_api_key=os.environ.get("ANTHROPIC_API_KEY"),
-            blend_strategy=strategy
-        )
+        orb = Orb(anthropic_api_key=os.environ.get("ANTHROPIC_API_KEY"), blend_strategy=strategy)
 
         response = await orb.process_query(query)
 
@@ -161,10 +152,7 @@ async def interactive_mode():
     print("Type 'quit' or 'exit' to stop, 'status' to see system status.")
     print()
 
-    orb = Orb(
-        anthropic_api_key=os.environ.get("ANTHROPIC_API_KEY"),
-        blend_strategy="weighted"
-    )
+    orb = Orb(anthropic_api_key=os.environ.get("ANTHROPIC_API_KEY"), blend_strategy="weighted")
 
     while True:
         try:
@@ -184,8 +172,8 @@ async def interactive_mode():
                 print(f"   Executions: {status['execution_count']}")
                 print(f"   Health: {status['system_health']}")
                 print(f"   Strategy: {status['blend_strategy']}")
-                for integration in status['integrations']:
-                    status_icon = "✓" if integration['enabled'] else "✗"
+                for integration in status["integrations"]:
+                    status_icon = "✓" if integration["enabled"] else "✗"
                     print(f"   {status_icon} {integration['name']}")
                 print()
                 continue

@@ -66,16 +66,8 @@ class HuggingFaceIntegration(BaseIntegration):
                 "source": self.name,
                 "status": "success",
                 "content": "\n".join(insights),
-                "metadata": {
-                    "models_engaged": len(insights),
-                    "specialization": "multi-modal"
-                }
+                "metadata": {"models_engaged": len(insights), "specialization": "multi-modal"},
             }
 
         except Exception as e:
-            return {
-                "source": self.name,
-                "status": "error",
-                "message": str(e),
-                "content": None
-            }
+            return {"source": self.name, "status": "error", "message": str(e), "content": None}

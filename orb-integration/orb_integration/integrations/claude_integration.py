@@ -20,7 +20,7 @@ class ClaudeIntegration(BaseIntegration):
         self,
         api_key: Optional[str] = None,
         model: str = "claude-3-5-sonnet-20241022",
-        enabled: bool = True
+        enabled: bool = True,
     ):
         """
         Initialize the Claude integration.
@@ -50,7 +50,7 @@ class ClaudeIntegration(BaseIntegration):
                 "source": self.name,
                 "status": "error",
                 "message": "Claude API key not configured",
-                "content": None
+                "content": None,
             }
 
         try:
@@ -71,11 +71,7 @@ unified answer."""
 
             # Call Claude API
             message = await self.client.messages.create(
-                model=self.model,
-                max_tokens=1024,
-                messages=[
-                    {"role": "user", "content": prompt}
-                ]
+                model=self.model, max_tokens=1024, messages=[{"role": "user", "content": prompt}]
             )
 
             # Extract response
@@ -86,13 +82,8 @@ unified answer."""
                 "status": "success",
                 "content": response_text,
                 "model": self.model,
-                "tokens_used": message.usage.input_tokens + message.usage.output_tokens
+                "tokens_used": message.usage.input_tokens + message.usage.output_tokens,
             }
 
         except Exception as e:
-            return {
-                "source": self.name,
-                "status": "error",
-                "message": str(e),
-                "content": None
-            }
+            return {"source": self.name, "status": "error", "message": str(e), "content": None}

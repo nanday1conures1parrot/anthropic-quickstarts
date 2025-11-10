@@ -13,8 +13,7 @@ class TestInputHandler:
         handler = InputHandler()
 
         unified = handler.condense_input(
-            query="How do I write a Python function?",
-            context={"language": "Python"}
+            query="How do I write a Python function?", context={"language": "Python"}
         )
 
         assert "query" in unified
@@ -68,16 +67,8 @@ class TestResponseBlender:
         blender = ResponseBlender()
 
         responses = [
-            {
-                "source": "Claude AI",
-                "status": "success",
-                "content": "Claude's response"
-            },
-            {
-                "source": "GitHub",
-                "status": "success",
-                "content": "GitHub's response"
-            }
+            {"source": "Claude AI", "status": "success", "content": "Claude's response"},
+            {"source": "GitHub", "status": "success", "content": "GitHub's response"},
         ]
 
         result = blender.blend_responses(responses, strategy="weighted")
@@ -92,16 +83,8 @@ class TestResponseBlender:
         blender = ResponseBlender()
 
         responses = [
-            {
-                "source": "Claude AI",
-                "status": "success",
-                "content": "Success"
-            },
-            {
-                "source": "GitHub",
-                "status": "error",
-                "message": "API error"
-            }
+            {"source": "Claude AI", "status": "success", "content": "Success"},
+            {"source": "GitHub", "status": "error", "message": "API error"},
         ]
 
         result = blender.blend_responses(responses)
@@ -116,7 +99,7 @@ class TestResponseBlender:
 
         responses = [
             {"source": "A", "status": "success", "content": "Content A"},
-            {"source": "B", "status": "success", "content": "Content B"}
+            {"source": "B", "status": "success", "content": "Content B"},
         ]
 
         result = blender.blend_responses(responses, strategy="concatenate")
@@ -131,7 +114,7 @@ class TestResponseBlender:
 
         responses = [
             {"source": "GitHub", "status": "success", "content": "GitHub"},
-            {"source": "Claude AI", "status": "success", "content": "Claude"}
+            {"source": "Claude AI", "status": "success", "content": "Claude"},
         ]
 
         result = blender.blend_responses(responses, strategy="prioritize")

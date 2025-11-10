@@ -61,14 +61,9 @@ class GitHubIntegration(BaseIntegration):
                 "content": "\n".join(insights),
                 "metadata": {
                     "analysis_type": "repository_context",
-                    "insights_count": len(insights)
-                }
+                    "insights_count": len(insights),
+                },
             }
 
         except Exception as e:
-            return {
-                "source": self.name,
-                "status": "error",
-                "message": str(e),
-                "content": None
-            }
+            return {"source": self.name, "status": "error", "message": str(e), "content": None}

@@ -17,9 +17,7 @@ class ResponseBlender:
         pass
 
     def blend_responses(
-        self,
-        responses: List[Dict[str, Any]],
-        strategy: str = "weighted"
+        self, responses: List[Dict[str, Any]], strategy: str = "weighted"
     ) -> Dict[str, Any]:
         """
         Blend multiple responses into a unified output.
@@ -32,11 +30,7 @@ class ResponseBlender:
             Unified response dictionary
         """
         if not responses:
-            return {
-                "status": "error",
-                "message": "No responses to blend",
-                "unified_content": None
-            }
+            return {"status": "error", "message": "No responses to blend", "unified_content": None}
 
         # Filter successful responses
         successful = [r for r in responses if r.get("status") == "success"]
@@ -47,7 +41,7 @@ class ResponseBlender:
                 "status": "error",
                 "message": "All integrations failed",
                 "errors": [r.get("message") for r in failed],
-                "unified_content": None
+                "unified_content": None,
             }
 
         # Apply blending strategy
@@ -61,9 +55,7 @@ class ResponseBlender:
             return self._weighted_blend(successful, failed)
 
     def _weighted_blend(
-        self,
-        successful: List[Dict[str, Any]],
-        failed: List[Dict[str, Any]]
+        self, successful: List[Dict[str, Any]], failed: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
         """
         Blend responses with weighted importance.
@@ -76,12 +68,7 @@ class ResponseBlender:
             Weighted blend of responses
         """
         # Define weights for different sources
-        weights = {
-            "Claude AI": 0.4,
-            "GitHub Copilot": 0.25,
-            "GitHub": 0.2,
-            "Hugging Face": 0.15
-        }
+        weights = {"Claude AI": 0.4, "GitHub Copilot": 0.25, "GitHub": 0.2, "Hugging Face": 0.15}
 
         blended_parts = []
         sources = []
@@ -106,15 +93,11 @@ class ResponseBlender:
             "blend_strategy": "weighted",
             "successful_integrations": len(successful),
             "failed_integrations": len(failed),
-            "metadata": {
-                "weights": {s: weights.get(s, 0.1) for s in sources}
-            }
+            "metadata": {"weights": {s: weights.get(s, 0.1) for s in sources}},
         }
 
     def _concatenate_blend(
-        self,
-        successful: List[Dict[str, Any]],
-        failed: List[Dict[str, Any]]
+        self, successful: List[Dict[str, Any]], failed: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
         """
         Concatenate all responses sequentially.
@@ -145,13 +128,11 @@ class ResponseBlender:
             "sources": sources,
             "blend_strategy": "concatenate",
             "successful_integrations": len(successful),
-            "failed_integrations": len(failed)
+            "failed_integrations": len(failed),
         }
 
     def _prioritize_blend(
-        self,
-        successful: List[Dict[str, Any]],
-        failed: List[Dict[str, Any]]
+        self, successful: List[Dict[str, Any]], failed: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
         """
         Prioritize responses based on source importance.
@@ -170,7 +151,8 @@ class ResponseBlender:
         sorted_responses = sorted(
             successful,
             key=lambda r: priority_order.index(r.get("source", ""))
-            if r.get("source") in priority_order else len(priority_order)
+            if r.get("source") in priority_order
+            else len(priority_order),
         )
 
         # Primary response is highest priority
@@ -197,5 +179,5 @@ class ResponseBlender:
             "supporting_sources": [r.get("source") for r in supporting],
             "blend_strategy": "prioritize",
             "successful_integrations": len(successful),
-            "failed_integrations": len(failed)
+            "failed_integrations": len(failed),
         }
